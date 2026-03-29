@@ -1,0 +1,27 @@
+{
+	"name": "Get Playtime",
+	"description" : "",
+	"author": "Sa1miakki",
+	"version": "1.0",
+	"priority" : -999,
+	"blt_version": 2,
+	"hooks": [
+		{
+			"hook_id": "lib/managers/menumanager",
+			"script_path": "menumanager.lua"
+		}
+	],
+        "keybinds": 
+	[
+		{
+			"keybind_id": "show_playtime",
+			"name": "获取游戏时间",
+			"description": "选择一名玩家，获取他的游戏时间",
+			"script_path": "time.lua",
+			"run_in_menu": true,
+			"run_in_game": true,
+			"localized": false
+		}
+	]
+
+}
