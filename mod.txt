@@ -11,6 +11,15 @@
 			"script_path": "menumanager.lua"
 		}
 	],
+        "updates" : [
+		{
+			"identifier" : "pd2_getplaytime",
+			"host" : {
+				"meta" : "https://raw.githubusercontent.com/Sa1miakki/pd2-get-playtime/refs/heads/main/meta.json"
+			}
+		}
+	],
+
         "keybinds": 
 	[
 		{

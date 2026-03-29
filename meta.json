@@ -1,8 +1,8 @@
 [
     {
-        "ident" : "pd2_dfserver",
-        "version": "1.1",
-        "patchnotes_url" : "https://modworkshop.net/mod/50897?tab=changelog",
-        "download_url" : "https://github.com/Sa1miakki/pd2-disconnect-from-server/archive/refs/heads/main.zip"
+        "ident" : "pd2_getplaytime",
+        "version": "1.0",
+        "patchnotes_url" : "https://tieba.baidu.com/p/10551686242",
+        "download_url" : "https://github.com/Sa1miakki/pd2-get-playtime/archive/refs/heads/main.zip"
     }
 ]
