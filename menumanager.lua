@@ -4,6 +4,46 @@ Hooks:Add("LocalizationManagerPostInit", "LocalizationManagerPostInit_SPT", func
     })
 end)
 
+function Get_Playtime_Peer(pid)
+    local peer = managers.network:session():peer(pid)
+	local user_id = peer:account_type_str() == "STEAM" and peer:account_id() or "epic"
+	
+	if not get_time then
+	    managers.chat:feed_system_message(ChatManager.GAME, string.format("正在获取 %s 的游戏时间", peer:name()))
+	end
+	
+	if user_id == "epic" then
+	    managers.chat:feed_system_message(ChatManager.GAME, string.format("%s 是非STEAM玩家!", peer:name()))
+	else
+	    dohttpreq("http://steamcommunity.com/profiles/" .. user_id .. "/?l=english",
+			function(page, id)
+			    --page = hidden --替换
+			    local get_time = true
+		        --managers.chat:feed_system_message(ChatManager.GAME, tostring(page))
+			    local _, hstart = string.find(page, "game_info_details")
+			    local _, hend = string.find(page, "hrs on record")
+			    
+				if page == "" then
+				    managers.chat:feed_system_message(ChatManager.GAME, "获取失败")
+					page = false
+				end
+			   
+ 			    if hstart and hend then
+			        local hour_str = string.sub(page, hstart + 4, hend1)
+			        local hour_str = string.gsub(hour_str, " hrs on record", "")
+					local hour_str = string.gsub(hour_str, "<br>", "")
+					local hour_str = string.gsub(hour_str, "\n", "")
+				    managers.chat:feed_system_message(ChatManager.GAME, string.format("%s 有%s 小时的游戏时间", peer:name(), hour_str))
+			    elseif string.find(page, "flat_page profile_page private_profile responsive_page") then
+				    managers.chat:feed_system_message(ChatManager.GAME, string.format("%s 的个人资料是私密的", peer:name()))
+			    elseif not private_profile and page then
+				    managers.chat:feed_system_message(ChatManager.GAME, string.format("%s 隐藏了游戏详情", peer:name()))
+				end
+			end)
+	end
+end
+
+
 Hooks:Add("MenuManagerBuildCustomMenus", "MenuManagerBuildCustomMenus_SPT", function(menu_manager, nodes)
     MenuCallbackHandler["SPT_confirm"] = function()
 	    if managers.network._session then
