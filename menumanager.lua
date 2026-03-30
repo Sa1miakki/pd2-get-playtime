@@ -15,11 +15,11 @@ function Get_Playtime_Peer(pid)
 	if user_id == "epic" then
 	    managers.chat:feed_system_message(ChatManager.GAME, string.format("%s 是非STEAM玩家!", peer:name()))
 	else
-	    dohttpreq("http://steamcommunity.com/profiles/" .. user_id .. "/?l=english",
+	    dohttpreq("https://steamcommunity.com/profiles/" .. user_id .. "/?l=english",
 			function(page, id)
 			    --page = hidden --替换
 			    local get_time = true
-		        --managers.chat:feed_system_message(ChatManager.GAME, tostring(page))
+				--managers.chat:feed_system_message(ChatManager.GAME, tostring(page))
 			    local _, hstart = string.find(page, "game_info_details")
 			    local _, hend = string.find(page, "hrs on record")
 			    
@@ -29,14 +29,14 @@ function Get_Playtime_Peer(pid)
 				end
 			   
  			    if hstart and hend then
-			        local hour_str = string.sub(page, hstart + 4, hend1)
+			        local hour_str = string.sub(page, hstart + 17, hend)
 			        local hour_str = string.gsub(hour_str, " hrs on record", "")
 					local hour_str = string.gsub(hour_str, "<br>", "")
 					local hour_str = string.gsub(hour_str, "\n", "")
-				    managers.chat:feed_system_message(ChatManager.GAME, string.format("%s 有%s 小时的游戏时间", peer:name(), hour_str))
+				    managers.chat:feed_system_message(ChatManager.GAME, string.format("%s 有 %s 小时的游戏时间", peer:name(), hour_str))
 			    elseif string.find(page, "flat_page profile_page private_profile responsive_page") then
 				    managers.chat:feed_system_message(ChatManager.GAME, string.format("%s 的个人资料是私密的", peer:name()))
-			    elseif not private_profile and page then
+			    elseif page then
 				    managers.chat:feed_system_message(ChatManager.GAME, string.format("%s 隐藏了游戏详情", peer:name()))
 				end
 			end)
